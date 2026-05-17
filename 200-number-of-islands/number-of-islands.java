@@ -1,41 +1,34 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        if (grid == null || grid.length == 0) return 0;
-        
-        int count = 0;
         int n = grid.length;
         int m = grid[0].length;
-        
-        // Loop through every cell in the grid
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                // If we find land, it's a new island!
-                if (grid[i][j] == '1') {
-                    count++;
-                    // Call DFS to "sink" the entire island
-                    dfs(grid, i, j);
+        int islandCount = 0;
+        int[] deltaRow = {-1, 0, +1, 0}; // up, left, down, right
+        int[] deltaCol = {0, +1, 0, -1};
+
+        for(int row=0; row< n; row++) {
+            for(int col=0; col< m; col++) {
+                if(grid[row][col] == '1') {
+                    islandCount++;
+                    dfs(row, col, grid, deltaRow, deltaCol);
                 }
             }
         }
-        return count;
+        return islandCount;
     }
 
-    private void dfs(char[][] grid, int row, int col) {
-        int n = grid.length;
-        int m = grid[0].length;
+    public void dfs(int row, int col, char[][] grid, int[] deltaRow, int[] deltaCol) {
+        grid[row][col] = '0'; // if visited then mark it as water, so we dont visit again
 
-        // Base cases: Stop if we go out of bounds or hit water ('0')
-        if (row < 0 || row >= n || col < 0 || col >= m || grid[row][col] == '0') {
-            return;
+        for(int i=0; i<4; i++) {
+            int neighRow = row + deltaRow[i];
+            int neighCol = col + deltaCol[i];
+
+            if(neighRow >= 0 && neighRow < grid.length &&
+                neighCol >= 0 && neighCol < grid[0].length &&
+                    grid[neighRow][neighCol] == '1') {
+                        dfs(neighRow, neighCol, grid, deltaRow, deltaCol);
+                    }
         }
-
-        // "Sink" the current cell so we don't visit it again
-        grid[row][col] = '0';
-
-        // Recursively visit all 4 neighboring directions
-        dfs(grid, row - 1, col); // Up
-        dfs(grid, row + 1, col); // Down
-        dfs(grid, row, col - 1); // Left
-        dfs(grid, row, col + 1); // Right
     }
 }
