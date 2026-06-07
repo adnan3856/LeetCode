@@ -9,12 +9,10 @@ class Solution {
         int[] result = new int[nums.length];
 
         for (int i = 0; i < nums.length; i++) {
-            // Formula: rightSum = totalSum - leftSum - nums[i]
             int rightSum = totalSum - leftSum - nums[i];
             
             result[i] = Math.abs(leftSum - rightSum);
             
-            // Prepare leftSum for the next index
             leftSum += nums[i];
         }
 
