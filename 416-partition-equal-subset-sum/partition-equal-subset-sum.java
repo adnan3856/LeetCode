@@ -14,7 +14,7 @@ class Solution {
 
         for(int num : nums) {
             for(int i = target; i >= num; i--) {
-                if(dp[i-num])
+                // if(dp[i-num])
                     dp[i] = dp[i] || dp[i - num];
 
                 // if(dp[x - num])
