@@ -1,28 +1,37 @@
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        // Convert list to HashSet for O(1) lookups
         Set<String> wordSet = new HashSet<>(wordDict);
-        boolean[] dp = new boolean[s.length() + 1];
+        Queue<Integer> queue = new LinkedList<>();
+        boolean[] visited = new boolean[s.length()];
         
-        // Base case: empty string can be segmented
-        dp[0] = true;
+        // Start processing from index 0
+        queue.add(0);
 
-        // i represents the end of the current substring we are evaluating
-        for (int i = 1; i <= s.length(); i++) {
-            // j represents the split point before i
-            for (int j = 0; j < i; j++) {
-                // If the prefix up to j is valid, AND the remaining substring(j, i) is a word
-                if (dp[j] && wordSet.contains(s.substring(j, i))) {
-                    dp[i] = true;
-                    break; // Found a valid segmentation for length i, no need to look further
+        while (!queue.isEmpty()) {
+            int start = queue.poll();
+
+            // If we haven't processed this starting index yet
+            if (!visited[start]) {
+                for (int end = start + 1; end <= s.length(); end++) {
+                    if (wordSet.contains(s.substring(start, end))) {
+                        // If we can reach the end of the string, we are done
+                        if (end == s.length()) {
+                            return true;
+                        }
+                        queue.add(end);
+                    }
                 }
+                // Mark this index as visited to prevent duplicate sub-tree evaluations
+                visited[start] = true;
             }
         }
 
-        return dp[s.length()];
+        return false;
     }
 }
