@@ -20,8 +20,8 @@ class Solution {
                 // if(dp[x - num])
                 //     dp[x] = true;
             }
-            if(dp[target])
-                return true;
+            // if(dp[target])
+            //     return true;
         }
 
         return dp[target];
