@@ -14,16 +14,17 @@ class Solution {
 
         boolean[][] dp = new boolean[nums.length+1][target+1];
 
-        // fill the column and row with true, as base case
+        // fill the column with true, as base case
         for(int i=0; i<=nums.length; i++)
             dp[i][0] = true;
         
+        // why not fi
         // for(int j=0; j<= target; j++)
         //     dp[0][j] = true;
 
         for(int i=1; i <= nums.length; i++) {
             int current = nums[i - 1];
-            for(int j=1; j <= target; j++) {
+            for(int j=0; j <= target; j++) {
                 // not take / skip
                 dp[i][j] = dp[i-1][j];
 
