@@ -1,37 +1,20 @@
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
-
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Set<String> wordSet = new HashSet<>(wordDict);
-        Queue<Integer> queue = new LinkedList<>();
-        boolean[] visited = new boolean[s.length()];
-        
-        // Start processing from index 0
-        queue.add(0);
+        Set<String> words = new HashSet<>(wordDict);
 
-        while (!queue.isEmpty()) {
-            int start = queue.poll();
+        boolean[] dp = new boolean[s.length() + 1];
 
-            // If we haven't processed this starting index yet
-            if (!visited[start]) {
-                for (int end = start + 1; end <= s.length(); end++) {
-                    if (wordSet.contains(s.substring(start, end))) {
-                        // If we can reach the end of the string, we are done
-                        if (end == s.length()) {
-                            return true;
-                        }
-                        queue.add(end);
-                    }
+        dp[0] = true;
+
+        for(int i=1; i<=s.length(); i++) {
+            for(int j=0; j<i; j++) {
+
+                if(dp[j] && words.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
                 }
-                // Mark this index as visited to prevent duplicate sub-tree evaluations
-                visited[start] = true;
             }
         }
-
-        return false;
+        return dp[s.length()];
     }
 }
