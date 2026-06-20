@@ -1,28 +1,33 @@
 class Solution {
     public int[][] floodFill(int[][] image, int sr, int sc, int color) {
-        int[][] res = image; // it is generally a good practice to not change the given data
-        int initColor = res[sr][sc];
+        // validate // visit // explore // return 
+
+        int originalColor = image[sr][sc];
+
+        if(originalColor == color)
+            return image;
         
-        int[] deltaRow = {-1, 0, +1, 0};
-        int[] deltaCol = {0, +1, 0, -1};            
-        dfs(sr, sc, image, res, deltaRow, deltaCol, initColor, color);
-        return res;
+        dfs(image, sr, sc, originalColor, color);
+        // return
+        return image;
     }
 
-    public void dfs(int row, int col, int[][] image, int[][] res, int[] deltaRow, int[] deltaCol, int initColor, int newColor) {
-        res[row][col] = newColor; // visited row, col
+    public void dfs(int[][] image, int row, int col, int originalColor, int color) {
 
-        for(int i = 0; i< 4; i++) {
-            int neighRow = row + deltaRow[i];
-            int neighCol = col + deltaCol[i];
+        // validate
+        if(row < 0 || col < 0 ||
+            row >= image.length || col >= image[0].length ||
+                image[row][col] != originalColor) {
+                    return;
+                }
+        
+        // visit
+        image[row][col] = color;
 
-            if(neighRow >= 0 && neighRow < image.length &&
-                neighCol >=0 && neighCol < image[0].length &&
-                 image[neighRow][neighCol] == initColor &&
-                    res[neighRow][neighCol] != newColor) {
-                        dfs(neighRow, neighCol, image, res, deltaRow, deltaCol, initColor, newColor);
-                    }
-        }
+        // explore all sides
+        dfs(image, row + 1, col, originalColor, color);
+        dfs(image, row - 1, col, originalColor, color);
+        dfs(image, row, col + 1, originalColor, color);
+        dfs(image, row, col - 1, originalColor, color);
     }
-
 }
