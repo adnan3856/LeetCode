@@ -3,7 +3,7 @@ class Solution {
         Set<String> words = new HashSet<>(wordDict);
 
         boolean[] dp = new boolean[s.length() + 1];
-
+        // Can first i characters be formed?    
         dp[0] = true;
 
         for(int i=1; i<=s.length(); i++) {
