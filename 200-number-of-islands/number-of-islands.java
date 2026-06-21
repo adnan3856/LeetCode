@@ -1,36 +1,32 @@
 class Solution {
     public int numIslands(char[][] grid) {
-        if(grid == null || grid.length == 0)
-            return 0;
-        int n = grid.length;
-        int m = grid[0].length;
-        int islandCount = 0;
-        int[] deltaRow = {-1, 0, +1, 0}; // up, left, down, right
-        int[] deltaCol = {0, +1, 0, -1};
+        int islands = 0;
 
-        for(int row=0; row< n; row++) {
-            for(int col=0; col< m; col++) {
-                if(grid[row][col] == '1') {
-                    islandCount++;
-                    dfs(row, col, grid, deltaRow, deltaCol);
+        for(int i=0; i< grid.length; i++) {
+            for(int j=0; j<grid[0].length; j++) {
+                if(grid[i][j] == '1') {
+                    islands++;
+                    dfs(grid, i, j);
                 }
             }
         }
-        return islandCount;
+        return islands;
     }
 
-    public void dfs(int row, int col, char[][] grid, int[] deltaRow, int[] deltaCol) {
-        grid[row][col] = '0'; // if visited then mark it as water, so we dont visit again
+    public void dfs(char[][] grid, int row, int col) {
+        // validate
+            if(row < 0 || col < 0 ||
+                row >= grid.length || col >= grid[0].length ||
+                grid[row][col] == '0') {
+                    return;
+                }
+        // visited
+        grid[row][col] = '0';
 
-        for(int i=0; i<4; i++) {
-            int neighRow = row + deltaRow[i];
-            int neighCol = col + deltaCol[i];
-
-            if(neighRow >= 0 && neighRow < grid.length &&
-                neighCol >= 0 && neighCol < grid[0].length &&
-                    grid[neighRow][neighCol] == '1') {
-                        dfs(neighRow, neighCol, grid, deltaRow, deltaCol);
-                    }
-        }
+        // explore
+        dfs(grid, row+1, col);
+        dfs(grid, row-1, col);
+        dfs(grid, row, col+1);
+        dfs(grid, row, col-1);
     }
 }
