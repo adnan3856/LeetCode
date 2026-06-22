@@ -23,19 +23,19 @@ class Solution {
 
     public Node cloneGraph(Node node) {
         if(node == null)
-            return null;
+            return node;
         
         if(map.containsKey(node))
             return map.get(node);
-        
-        Node clone = new Node(node.val);
 
-        map.put(node, clone);
+        Node newNode = new Node(node.val);
+
+        map.put(node, newNode);
 
         for(Node neighbor : node.neighbors) {
-            clone.neighbors.add(cloneGraph(neighbor));
+            newNode.neighbors.add(cloneGraph(neighbor));
         }
-
-        return clone;
+        
+        return newNode;
     }
 }
