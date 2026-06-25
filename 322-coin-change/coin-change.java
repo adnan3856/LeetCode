@@ -1,26 +1,40 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
-        // Question to ask: will the minimum of i coins make amount j
         int[][] dp = new int[coins.length+1][amount+1];
 
-        // expecting that any number of coins cannot make amonut, except 0 coins
-        for(int i=1; i<=amount; i++) {
+        for(int i=1; i<=amount; i++)
             dp[0][i] = amount+1;
-        }
 
-        for(int i = 1; i<= coins.length; i++) {
+        for(int i=1; i<=coins.length; i++) {
             int coin = coins[i-1];
-
-            for(int j=0; j<= amount; j++) {
-                
-                // not take
+            for(int j=0; j<=amount; j++) {
                 dp[i][j] = dp[i-1][j];
 
-                if(j >= coin) {
-                    dp[i][j] = Math.min(dp[i-1][j], 1+ dp[i][j-coin]);
-                }
+                if(j >=coin)
+                    dp[i][j] = Math.min(dp[i][j], 1 + dp[i][j-coin]);
             }
         }
+        
         return dp[coins.length][amount] > amount ? -1 : dp[coins.length][amount];
+
+        // int[][] dp = new int[coins.length+1][amount+1];
+
+        // // can 0 coins make the amount, no, so, infinity or cannot be done
+        // for(int i=1; i<=amount; i++) {
+        //     dp[0][i] = amount+1;
+        // }
+
+        // for(int i=1; i<=coins.length; i++) {
+        //     int coin = coins[i-1];
+        //     for(int j=0; j<=amount; j++) {
+        //         // not take
+        //         dp[i][j] = dp[i-1][j];
+
+        //         // take
+        //         if(j >= coin)
+        //             dp[i][j] = Math.min(dp[i][j], 1 + dp[i][j- coin]);
+        //     }
+        // }
+        // return dp[coins.length][amount] > amount ? -1 : dp[coins.length][amount];
     }
 }
