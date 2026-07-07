@@ -3,15 +3,16 @@ class Solution {
         Map<String, List<String>> map = new HashMap<>();
 
         for(String str : strs) {
-            char[] ch = str.toCharArray();
-            Arrays.sort(ch);
-            String word = String.valueOf(ch);
+            char[] wordChar = str.toCharArray();
+            Arrays.sort(wordChar);
+            String sortedWord = String.valueOf(wordChar);
 
-            while(!map.containsKey(word)) {
-               map.put(word, new ArrayList<>()); 
+            if(!map.containsKey(sortedWord)) {
+                map.put(sortedWord, new ArrayList<>());
             }
-            map.get(word).add(str);
+            map.get(sortedWord).add(str);
         }
+
         return new ArrayList<>(map.values());
     }
 }
