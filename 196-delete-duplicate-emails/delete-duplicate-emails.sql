@@ -1,3 +1,10 @@
--- Write your PostgreSQL query statement below
-delete from person p1 using person p2
-where p1.email=p2.email and p1.id > p2.id;
+-- -- Write your PostgreSQL query statement below
+-- delete from person p1 using person p2
+-- where p1.email=p2.email and p1.id > p2.id;
+
+DELETE FROM person
+WHERE id NOT IN (
+    SELECT MIN(id)
+    FROM person
+    GROUP BY email
+);
