@@ -1,0 +1,5 @@
+/* Write your PL/SQL query statement below */
+SELECT CLASS
+FROM COURSES C
+GROUP BY CLASS
+HAVING COUNT(STUDENT) >= 5;
