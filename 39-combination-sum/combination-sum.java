@@ -8,23 +8,26 @@ class Solution {
     }
 
     public void backtrack(int[] candidates, int target, int start, List<Integer> current, List<List<Integer>> result) {
-        if(target == 0) {
-            result.add(new ArrayList<>(current));
-            return;
-        }
+        
+        // base
+            if(target == 0){
+                result.add(new ArrayList<>(current));
+                return;
+            }
 
-        if(target < 0)
-            return;
+            if(target < 0)
+                return;
 
-        for(int i=start; i< candidates.length; i++) {
+        for(int i=start; i<candidates.length; i++) {
             // choose
-                current.add(candidates[i]);
+            current.add(candidates[i]);
 
             // explore
-                backtrack(candidates, target - candidates[i], i, current, result);
-            
+            backtrack(candidates, target - candidates[i], i, current, result);
+
             // unchoose
-                current.remove(current.size() - 1);
+            current.remove(current.size() - 1);
+
         }
     }
 }
