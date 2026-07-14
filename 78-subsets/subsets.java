@@ -7,11 +7,11 @@ class Solution {
         return result;
     }
 
-    public void backtrack(int[] nums, int index, List<Integer> current, List<List<Integer>> result) {
+    public void backtrack(int[] nums, int start, List<Integer> current, List<List<Integer>> result) {
         // base
         result.add(new ArrayList<>(current));
 
-        for(int i=index; i<nums.length; i++) {
+        for(int i=start; i<nums.length; i++) {
             // choose
             current.add(nums[i]);
 
@@ -20,6 +20,7 @@ class Solution {
 
             // unchoose
             current.remove(current.size() - 1);
+        
         }
     }
 }
